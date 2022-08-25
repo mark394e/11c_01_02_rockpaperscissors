@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Rock, Paper, Scissors</title>
+    <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Rock, Paper, Scissors</h1>
+
+    <div id="gamefield">
+      <div id="player1" class="player"></div>
+      <div id="player2" class="player"></div>
+      <div id="texts">
+        <div id="lose" class="hidden"><h1>You lose</h1></div>
+        <div id="win" class="hidden"><h1>You win</h1></div>
+        <div id="draw" class="hidden"><h1>It's a draw</h1></div>
+      </div>
+    </div>
+
+    <div id="buttons">
+      <button class="rock"></button>
+      <button class="paper"></button>
+      <button class="scissors"></button>
+    </div>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", gameLoads);
+
+    const rock = document.querySelector(".rock");
+    const paper = document.querySelector(".paper");
+    const scissors = document.querySelector(".scissors");
+
+    const winScreen = document.querySelector("#win");
+    const loseScreen = document.querySelector("#lose");
+    const drawScreen = document.querySelector("#draw");
+
+    const playerHand = document.querySelector("#player1");
+    const computerHand = document.querySelector("#player2");
+
+    let playerChoice;
+    let computerChoice;
+    let playerScore = 0;
+    let computerScore = 0;
+
+    function gameLoads() {
+      console.log("gameLoads");
+      winScreen.classList.add("hidden");
+      loseScreen.classList.add("hidden");
+      drawScreen.classList.add("hidden");
+
+      playerHand.classList.remove("scissors");
+      playerHand.classList.remove("paper");
+      playerHand.classList.add("rock");
+
+      computerHand.classList.remove("scissors");
+      computerHand.classList.remove("paper");
+      computerHand.classList.add("rock");
+
+      rock.addEventListener("mousedown", chooseRock);
+      paper.addEventListener("mousedown", choosePaper);
+      scissors.addEventListener("mousedown", chooseScissors);
+    }
+
+    function computerTurn() {
+      const mathRandom = Math.floor(Math.random() * 3) + 1;
+      console.log(mathRandom);
+
+      switch (mathRandom) {
+        case 1:
+          computerChoice = "rock";
+          break;
+        case 2:
+          computerChoice = "paper";
+          break;
+        case 3:
+          computerChoice = "scissors";
+          break;
+      }
+    }
+
+    function chooseRock() {
+      console.log("chooseRock");
+      playerChoice = "rock";
+      playerHand.classList.add("shake");
+      computerHand.classList.add("shake");
+      computerTurn();
+      setTimeout(() => {
+        playerHand.classList.remove("shake"), computerHand.classList.remove("shake"), playerHand.classList.add("rock"), computerHand.classList.add(computerChoice);
+      }, 1800);
+      setTimeout(() => {
+        determineWinner();
+      }, 2000);
+    }
+    function choosePaper() {
+      console.log("choosePaper");
+      playerChoice = "paper";
+      playerHand.classList.add("shake");
+      computerHand.classList.add("shake");
+      computerTurn();
+      setTimeout(() => {
+        playerHand.classList.remove("shake"), computerHand.classList.remove("shake"), playerHand.classList.add("paper"), computerHand.classList.add(computerChoice);
+      }, 1800);
+      setTimeout(() => {
+        determineWinner();
+      }, 2000);
+    }
+    function chooseScissors() {
+      console.log("chooseScissors");
+      playerChoice = "scissors";
+      playerHand.classList.add("shake");
+      computerHand.classList.add("shake");
+      computerTurn();
+      setTimeout(() => {
+        playerHand.classList.remove("shake"), computerHand.classList.remove("shake"), playerHand.classList.add("scissors"), computerHand.classList.add(computerChoice);
+      }, 1800);
+      setTimeout(() => {
+        determineWinner();
+      }, 2000);
+    }
+
+    function determineWinner() {
+      console.log("determineWinner");
+      if (playerChoice == computerChoice) {
+        draw();
+      } else if (computerChoice == "rock") {
+        return playerChoice == "paper" ? youWin() : youLose();
+      } else if (computerChoice == "paper") {
+        return playerChoice == "scissors" ? youWin() : youLose();
+      } else if (computerChoice == "scissors") {
+        return playerChoice == "rock" ? youWin() : youLose();
+      }
+    }
+
+    function youWin() {
+      console.log("youWin");
+      winScreen.classList.remove("hidden");
+      setTimeout(() => {
+        gameLoads();
+      }, 2500);
+    }
+    function youLose() {
+      console.log("youLose");
+      loseScreen.classList.remove("hidden");
+      setTimeout(() => {
+        gameLoads();
+      }, 2500);
+    }
+    function draw() {
+      console.log("draw");
+      drawScreen.classList.remove("hidden");
+      setTimeout(() => {
+        gameLoads();
+      }, 2500);
+    }
+  </script>
+</html>
