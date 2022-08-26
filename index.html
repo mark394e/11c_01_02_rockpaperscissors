@@ -28,8 +28,10 @@
     </div>
   </body>
   <script>
+    // waiting for the DOM to load
     document.addEventListener("DOMContentLoaded", gameLoads);
 
+    // Defining constants and variables
     const rock = document.querySelector(".rock");
     const paper = document.querySelector(".paper");
     const scissors = document.querySelector(".scissors");
@@ -43,32 +45,36 @@
 
     let playerChoice;
     let computerChoice;
-    let playerScore = 0;
-    let computerScore = 0;
 
     function gameLoads() {
       console.log("gameLoads");
+      // hiding all end screens
       winScreen.classList.add("hidden");
       loseScreen.classList.add("hidden");
       drawScreen.classList.add("hidden");
 
+      // resetting the playerHand
       playerHand.classList.remove("scissors");
       playerHand.classList.remove("paper");
       playerHand.classList.add("rock");
 
+      // resetting the computerHand
       computerHand.classList.remove("scissors");
       computerHand.classList.remove("paper");
       computerHand.classList.add("rock");
 
+      // add an eventlistener to every button and listening for mousedown
       rock.addEventListener("mousedown", chooseRock);
       paper.addEventListener("mousedown", choosePaper);
       scissors.addEventListener("mousedown", chooseScissors);
     }
 
     function computerTurn() {
+      // generating random number between 1 and 3
       const mathRandom = Math.floor(Math.random() * 3) + 1;
       console.log(mathRandom);
 
+      // using the random number to determine which hand the computer will show
       switch (mathRandom) {
         case 1:
           computerChoice = "rock";
@@ -84,39 +90,70 @@
 
     function chooseRock() {
       console.log("chooseRock");
+
+      // sets the variable playerChoice to "rock"
       playerChoice = "rock";
+
+      // adds the shake animation to the playerHand and computerHand
       playerHand.classList.add("shake");
       computerHand.classList.add("shake");
+
+      // run the computerTurn function to get a random hand from the computer
       computerTurn();
+
+      // wait 1.8s before removing shake-animation from both player- and computerHand as well as adding the player choice and computerChoice
       setTimeout(() => {
         playerHand.classList.remove("shake"), computerHand.classList.remove("shake"), playerHand.classList.add("rock"), computerHand.classList.add(computerChoice);
       }, 1800);
+
+      // wait 2s to run the determineWinner function
       setTimeout(() => {
         determineWinner();
       }, 2000);
     }
+
     function choosePaper() {
       console.log("choosePaper");
+
+      // sets the variable playerChoice to "paper"
       playerChoice = "paper";
+
+      // adds the shake-animation to the playerHand and computerHand
       playerHand.classList.add("shake");
       computerHand.classList.add("shake");
+
+      // run the computerTurn function to get a random hand from the computer
       computerTurn();
+
+      // wait 1.8s before removing shake-animation from both player- and computerHand as well as adding the player choice and computerChoice
       setTimeout(() => {
         playerHand.classList.remove("shake"), computerHand.classList.remove("shake"), playerHand.classList.add("paper"), computerHand.classList.add(computerChoice);
       }, 1800);
+
+      // wait 2s to run the determineWinner function
       setTimeout(() => {
         determineWinner();
       }, 2000);
     }
     function chooseScissors() {
       console.log("chooseScissors");
+
+      // sets the variable playerChoice to "scissors"
       playerChoice = "scissors";
+
+      // adds the shake-animation to the playerHand and computerHand
       playerHand.classList.add("shake");
       computerHand.classList.add("shake");
+
+      // run the computerTurn function to get a random hand from the computer
       computerTurn();
+
+      // wait 1.8s before removing shake-animation from both player- and computerHand as well as adding the player choice and computerChoice
       setTimeout(() => {
         playerHand.classList.remove("shake"), computerHand.classList.remove("shake"), playerHand.classList.add("scissors"), computerHand.classList.add(computerChoice);
       }, 1800);
+
+      // wait 2s to run the determineWinner function
       setTimeout(() => {
         determineWinner();
       }, 2000);
@@ -124,34 +161,54 @@
 
     function determineWinner() {
       console.log("determineWinner");
+
+      // if the variables playerChoice and computerChoice is exactly the same it's a draw
       if (playerChoice == computerChoice) {
         draw();
-      } else if (computerChoice == "rock") {
+      }
+      // if the computerChoice is "rock" and the playerChoice is "paper" you win - otherwise you lose
+      else if (computerChoice == "rock") {
         return playerChoice == "paper" ? youWin() : youLose();
-      } else if (computerChoice == "paper") {
+      }
+      // if the computerChoice is "paper" and the playerChoice is "scissors" you win - otherwise you lose
+      else if (computerChoice == "paper") {
         return playerChoice == "scissors" ? youWin() : youLose();
-      } else if (computerChoice == "scissors") {
+      }
+      // if the computerChoice is "scissors" and the playerChoice is "rock" you win - otherwise you lose
+      else if (computerChoice == "scissors") {
         return playerChoice == "rock" ? youWin() : youLose();
       }
     }
 
     function youWin() {
       console.log("youWin");
+
+      // removing the class "hidden" from the winning end screen
       winScreen.classList.remove("hidden");
+
+      // wait 2.5s before resetting
       setTimeout(() => {
         gameLoads();
       }, 2500);
     }
     function youLose() {
       console.log("youLose");
+
+      // removing the class "hidden" from the losing end screen
       loseScreen.classList.remove("hidden");
+
+      // wait 2.5s before resetting
       setTimeout(() => {
         gameLoads();
       }, 2500);
     }
     function draw() {
       console.log("draw");
+
+      // removing the class "hidden" from the draw end screen
       drawScreen.classList.remove("hidden");
+
+      // wait 2.5s before resetting
       setTimeout(() => {
         gameLoads();
       }, 2500);
